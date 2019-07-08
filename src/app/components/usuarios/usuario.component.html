@@ -1,0 +1,177 @@
+
+<h1>Lista de Usuarios -
+
+  <div *ngIf="this.nuevo" class="d-inline-block"><small>Add</small></div>
+  <div *ngIf="!this.nuevo" class="d-inline-block"><small>Edit</small></div>
+
+</h1>
+
+<hr>
+
+<div class="row mb-3">
+
+  <div class="col-md-12">
+
+    <button *ngIf="!this.nuevo" class="btn btn-outline-primary" type="button" [routerLink]="['/usuario','nuevo']">
+      <fa-icon [icon]="['fas', 'user-plus']"></fa-icon>
+      Agregar un nuevo Usuario
+    </button>
+
+    <button [routerLink]="['/usuarios']"
+            class="btn btn-link d-inline-block align-middle">
+      <fa-icon [icon]="['fas', 'table']"></fa-icon>
+      Regresar
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<div class="row">
+
+  <div class="col-md-12">
+
+    <form [formGroup]="formUsuario" (ngSubmit)="guardar()">
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Nombres</label>
+        <div class="col-md-8">
+
+          <input [formControlName]="['nombres']"
+                 class="form-control"
+                 [ngClass]="{'is-invalid': formUsuario.get('nombres').status == 'INVALID' && formUsuario.get('nombres').touched}"
+                 type="text"
+                 name="nombres"
+          >
+
+          <div class="invalid-feedback" *ngIf="formUsuario.get('nombres').touched && formUsuario.controls['nombres'].errors?.required">
+            Este campo es obligatorio *</div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Apellidos</label>
+        <div class="col-md-8">
+
+          <input [formControlName]="['apellidos']"
+                 class="form-control"
+                 [ngClass]="{'is-invalid': formUsuario.get('apellidos').status == 'INVALID' && formUsuario.get('apellidos').touched}"
+                 type="text"
+                 name="apellidos"
+          >
+
+          <div class="invalid-feedback" *ngIf="formUsuario.get('apellidos').touched && formUsuario.controls['apellidos'].errors?.required">
+            Este campo es obligatorio *</div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Cedula</label>
+        <div class="col-md-8">
+
+          <input [formControlName]="['cedula']"
+                 class="form-control"
+                 [ngClass]="{'is-invalid': formUsuario.get('cedula').status == 'INVALID' && formUsuario.get('cedula').touched || formUsuario.controls['cedula'].errors?.existe}"
+                 type="text"
+                 name="cedula"
+          >
+
+          <div class="invalid-feedback" *ngIf="formUsuario.get('cedula').touched && formUsuario.controls['cedula'].errors?.required">
+            Este campo es obligatorio *</div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['cedula'].errors?.pattern">
+            {{formUsuario.controls['cedula'].errors?.pattern.actualValue}} Solo se admiten n&uacute;meros
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['cedula'].errors?.minlength &&
+          !formUsuario.controls['cedula'].errors?.maxlength && !formUsuario.controls['cedula'].errors?.pattern">
+            Se espera un n&uacute;mero no menor a {{formUsuario.controls['cedula'].errors.minlength.requiredLength}} d&iacute;gitos
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['cedula'].errors?.maxlength && !formUsuario.controls['cedula'].errors?.pattern">
+            Se espera un n&uacute;mero no mayor a {{formUsuario.controls['cedula'].errors.maxlength.requiredLength}} d&iacute;gitos
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['cedula'].errors?.existe">
+            Esta cedula ya est&aacute; registrada
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+
+          <input [formControlName]="['correo']"
+                 class="form-control"
+                 [ngClass]="{'is-invalid': formUsuario.get('correo').status == 'INVALID' && formUsuario.get('correo').touched || formUsuario.controls['correo'].errors?.existe}"
+                 type="text"
+                 name="correo"
+          >
+
+          <div class="invalid-feedback" *ngIf="formUsuario.get('correo').touched && formUsuario.controls['correo'].errors?.required">
+            Este campo es obligatorio *</div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['correo'].errors?.pattern">
+            {{formUsuario.controls['correo'].errors?.pattern.actualValue}} No es un Email valido
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['correo'].errors?.existe">
+            Este correo ya est&aacute; registrado
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Tel&eacute;fono</label>
+        <div class="col-md-8">
+
+          <input [formControlName]="['telefono']"
+                 class="form-control"
+                 [ngClass]="{'is-invalid': formUsuario.get('telefono').status == 'INVALID' && formUsuario.get('telefono').touched || formUsuario.controls['telefono'].errors?.pattern}"
+                 type="text"
+                 name="telefono"
+          >
+
+          <div class="invalid-feedback" *ngIf="formUsuario.get('telefono').touched && formUsuario.controls['telefono'].errors?.required">
+            Este campo es obligatorio *</div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['telefono'].errors?.pattern">
+            {{formUsuario.controls['telefono'].errors?.pattern.actualValue}} Solo se admiten n&uacute;meros
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['telefono'].errors?.minlength &&
+          !formUsuario.controls['telefono'].errors?.maxlength && !formUsuario.controls['telefono'].errors?.pattern">
+            Se espera un n&uacute;mero no menor a {{formUsuario.controls['telefono'].errors.minlength.requiredLength}} d&iacute;gitos
+          </div>
+
+          <div class="invalid-feedback" *ngIf="formUsuario.controls['telefono'].errors?.maxlength && !formUsuario.controls['telefono'].errors?.pattern">
+            Se espera un n&uacute;mero no mayor a {{formUsuario.controls['telefono'].errors.maxlength.requiredLength}} d&iacute;gitos
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-success mt-5" type="submit">Guardar cambios</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<app-spinner [show]="spinner"></app-spinner>
+

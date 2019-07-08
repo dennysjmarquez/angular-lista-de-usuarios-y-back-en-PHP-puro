@@ -1,0 +1,63 @@
+.spin-loader {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-left: -60px;
+  height: 120px;
+  width: 120px;
+  background: transparent;
+  border: 8px solid;
+  border-color: #187dbc transparent #1879bc transparent;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.23, 0.78, 0.69, 0.84);
+  animation: spin 0.75s infinite linear;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7)
+}
+.loader-overlay.ng-hide {
+  opacity: 0;
+}
+.loader-overlay.ng-hide .spin-loader.shrink {
+  top: calc(25% + 60px);
+  margin-left: 0;
+  width: 10px;
+  height: 10px;
+}
+.loader-overlay.ng-hide .spin-loader.expand {
+  top: calc(25% - 100px);
+  margin-left: -200px;
+  width: 400px;
+  height: 400px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+body {
+  color: white;
+  background: #1E1E1E;
+  text-align: center;
+}
+body p {
+  max-width: 400px;
+  margin: 10px auto;
+}
+
+.input-header {
+  background: #32323c;
+  height: 30px;
+  padding: 12.5px;
+  box-sizing: content-box;
+}

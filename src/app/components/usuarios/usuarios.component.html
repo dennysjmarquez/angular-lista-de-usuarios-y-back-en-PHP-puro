@@ -1,0 +1,76 @@
+
+<h1>Lista de Usuarios</h1>
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-12">
+    <button class="btn btn-primary" type="button" [routerLink]="['/usuario','nuevo']">
+      <fa-icon [icon]="['fas', 'user-plus']"></fa-icon>
+      Agregar un nuevo Usuario
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Tel&eacute;fono</th>
+          <th scope="col" class="text-right"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let item of usuarios | keyvalue; let i = index">
+
+          <td>{{i + 1}}</td>
+          <td>{{item.value.nombres}}</td>
+          <td>{{item.value.apellidos}}</td>
+          <td>{{item.value.cedula}}</td>
+          <td>{{item.value.correo}}</td>
+          <td>{{item.value.telefono}}</td>
+          <td class="text-right">
+
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-success" [routerLink]="['/usuario', item.value.id]">
+                <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>Editar
+              </button>
+              &nbsp;
+              <button type="button" class="btn btn-danger" (click)="borrarUsuarioModal(item.value.id, item.value.nombres)">
+                <fa-icon [icon]="['fas', 'user-times']"></fa-icon>
+                Elimnar
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+
+      <div *ngIf="(usuarios.length === 0 && !this.loading)" class="alert alert-info" role="alert">
+
+        <strong>No hay</strong> registros que mostrar
+
+      </div>
+
+      <div *ngIf="this.loading" class="alert alert-warning" role="alert">
+
+        <strong>Cargando...</strong> por favor espere
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-btmodal [usuarioModal]="usuarioModal" (aceptarModal)="this.borrarUsuario()"></app-btmodal>
